@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Melbon Car Sale Management System</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <!-- Logo and Brand -->
+                <a class="navbar-brand d-flex align-items-center">
+                    <i class="bi bi-car-front-fill me-2 text-primary"></i>
+                    <span class="fw-bold">Melbon Car Sales</span>
+                </a>
+
+                <!-- Mobile Toggle Button -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                @{
+                    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+                    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+                    var isAuthPage = currentController == "AccountAuth" && 
+                                  (currentAction == "Login" || currentAction == "Register");
+                }
+
+                @if (!isAuthPage)
+                {
+                    <div class="collapse navbar-collapse" id="navbarContent">
+                        <!-- Main Navigation -->
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")" 
+                                   asp-controller="Home" asp-action="Index">
+                                    <i class="bi bi-house-door me-1"></i> Home
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#featured-cars">
+                                    <i class="bi bi-car-front me-1"></i> Cars
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Home/About">
+                                    <i class="bi bi-info-circle me-1"></i> About
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#footer">
+                                    <i class="bi bi-telephone me-1"></i> Contact
+                                </a>
+                            </li>
+                        </ul>
+
+                        <!-- Logout Button -->
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <form asp-controller="AccountAuth" asp-action="Logout" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-outline-light">
+                                    <i class="bi bi-box-arrow-right me-1"></i> Logout
+                                </button>
+                            </form>
+                        }
+                    </div>
+                }
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-4">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-light pt-4 mt-4" id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-12 mb-3">
+                    <h5 class="text-light mb-3">Melbon Car Sales</h5>
+                    <p class="text-muted">
+                        Your trusted partner in finding the perfect vehicle. Quality cars, exceptional service, and competitive prices.
+                    </p>
+                </div>
+
+                @if (!isAuthPage){
+                <div class="col-md-4 col-sm-12 mb-3">
+                    <h5 class="text-light mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a class="text-muted text-decoration-none" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="mb-2"><a class="text-muted text-decoration-none" asp-controller="Home" asp-action="Privacy">Privacy Policy</a></li>
+                        <li class="mb-2"><a class="text-muted text-decoration-none" href="#">About Us</a></li>
+                        <li class="mb-2"><a class="text-muted text-decoration-none" href="#">Contact</a></li>
+                    </ul>
+                </div>
+                }
+                <div class="col-md-4 col-sm-12 mb-3">
+                    <h5 class="text-light mb-3">Contact Us</h5>
+                    <ul class="list-unstyled text-muted">
+                        <li class="mb-2"><i class="bi bi-geo-alt"></i> Tom Mboya Street, Nairobi City</li>
+                        <li class="mb-2"><i class="bi bi-telephone"></i> +254 791178996</li>
+                        <li class="mb-2"><i class="bi bi-envelope"></i> info@melboncars.com</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-secondary mt-4 mb-4">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="text-muted mb-0">&copy; @DateTime.Now.Year - Melbon Car Sales. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a class="text-muted text-decoration-none me-3" href="#"><i class="bi bi-facebook"></i></a>
+                    <a class="text-muted text-decoration-none me-3" href="#"><i class="bi bi-twitter"></i></a>
+                    <a class="text-muted text-decoration-none me-3" href="#"><i class="bi bi-instagram"></i></a>
+                    <a class="text-muted text-decoration-none" href="#"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

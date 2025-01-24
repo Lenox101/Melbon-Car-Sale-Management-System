@@ -1,0 +1,83 @@
+@model List<Melbon_Car_Sale_Management_System.Models.MarketCarData>
+
+@{
+    ViewData["Title"] = "Car Manufacturers";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Global Car Manufacturers</h2>
+
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Error
+        </div>
+    }
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Car Manufacturers Overview</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="brandsTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Manufacturer</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var make in Model)
+                                    {
+                                        <tr>
+                                            <td>@make.Id</td>
+                                            <td>@make.Name</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Manufacturers</h5>
+                        <p class="card-text display-6">
+                            @Model.Count
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            No market data available at the moment. Please try again later.
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#brandsTable').DataTable({
+                "pageLength": 25,
+                "order": [[0, "asc"]]
+            });
+        });
+    </script>
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "ContainingType": "Melbon_Car_Sale_Management_System.Controllers.CarSalesAPIs",
+    "Method": "GetCarSales",
+    "RelativePath": "api/CarSalesAPIs",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
